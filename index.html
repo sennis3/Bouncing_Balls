@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Bouncing Balls</title>
+    <h1>Bouncing Balls</h1>
+</head>
+<body>
+    <!-- <canvas id="animationCanvas" width="document.body.clientWidth" height="document.body.clientHeight"
+     style="border:1px solid #000000;"></canvas> -->
+     <!--<canvas id="animationCanvas" width="window.innerWidth" height="window.innerHeigth" style="border:1px solid #000000;"></canvas>-->
+    <canvas id="animationCanvas" width="1200" height="700" style="border:1px solid #000000;"></canvas>
+
+    <script>
+        const c = document.getElementById("animationCanvas");   
+        const ctx = c.getContext("2d");
+
+        let circle1X = 50 + Math.floor(Math.random() * (500));
+        let circle1Y = 50 + Math.floor(Math.random() * (600));
+        let circle2X = 650 + Math.floor(Math.random() * (500));
+        let circle2Y = 50 + Math.floor(Math.random() * (600));
+        
+        let speed1X = 5;
+        let speed1Y = 5;
+        let speed2X = 5;
+        let speed2Y = 5;
+
+        function draw() {
+            circle1X += speed1X;
+            circle1Y += speed1Y;
+            circle2X += speed2X;
+            circle2Y += speed2Y;
+
+            if (circle1X <= 45 || circle1X >= c.width-45){
+                speed1X = -speed1X;
+            }
+            if (circle1Y <= 45 || circle1Y >= c.height-45){
+                speed1Y = -speed1Y;
+            }
+            if (circle2X <= 45 || circle2X >= c.width-45){
+                speed2X = -speed2X;
+            }
+            if (circle2Y <= 45 || circle2Y >= c.height-45){
+                speed2Y = -speed2Y;
+            }
+
+            ctx.clearRect(0, 0, c.width, c.height);
+            ctx.fillStyle = "red";
+            ctx.beginPath();
+            ctx.arc(circle1X, circle1Y, 50, 0, Math.PI * 2);
+            ctx.fill();
+
+            //ctx.clearRect(0, 0, c.width, c.height);
+            ctx.fillStyle = "blue";
+            ctx.beginPath();
+            ctx.arc(circle2X, circle2Y, 50, 0, Math.PI * 2);
+            ctx.fill();
+
+            window.requestAnimationFrame(draw);
+        }
+
+        window.requestAnimationFrame(draw);
+    </script>
+</body>
+</html>
+
