@@ -30,6 +30,18 @@
             circle2X += speed2X;
             circle2Y += speed2Y;
 
+
+            //Ball Collisions - not great
+            if (distanceFormula(circle1X, circle1Y, circle2X, circle2Y) < 100) {
+                let temp = speed1X;
+                speed1X = speed2X;
+                speed2X = temp;
+                temp = speed1Y;
+                speed1Y = speed2Y;
+                speed2Y = temp;
+            }
+
+            //Wall Collisions
             if (circle1X <= 45 || circle1X >= c.width-45){
                 speed1X = -speed1X;
             }
@@ -56,6 +68,13 @@
             ctx.fill();
 
             window.requestAnimationFrame(draw);
+        }
+
+        //Calculates distance between two points
+        function distanceFormula(x1, y1, x2, y2) {
+            let x = Math.abs(x1-x2);
+            let y = Math.abs(y1-y2);
+            return Math.sqrt(x*x + y*y);
         }
 
         window.requestAnimationFrame(draw);
