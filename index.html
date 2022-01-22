@@ -5,9 +5,6 @@
     <h1>Bouncing Balls</h1>
 </head>
 <body>
-    <!-- <canvas id="animationCanvas" width="document.body.clientWidth" height="document.body.clientHeight"
-     style="border:1px solid #000000;"></canvas> -->
-     <!--<canvas id="animationCanvas" width="window.innerWidth" height="window.innerHeigth" style="border:1px solid #000000;"></canvas>-->
     <canvas id="animationCanvas" width="1200" height="700" style="border:1px solid #000000;"></canvas>
 
     <script>
@@ -19,10 +16,10 @@
         let circle2X = 650 + Math.floor(Math.random() * (500));
         let circle2Y = 50 + Math.floor(Math.random() * (600));
         
-        let speed1X = 5;
-        let speed1Y = 5;
-        let speed2X = 5;
-        let speed2Y = 5;
+        let speed1X = 10;
+        let speed1Y = 10;
+        let speed2X = -10;
+        let speed2Y = 10;
 
         function draw() {
             circle1X += speed1X;
@@ -31,14 +28,18 @@
             circle2Y += speed2Y;
 
 
-            //Ball Collisions - not great
+            //Ball Collisions
             if (distanceFormula(circle1X, circle1Y, circle2X, circle2Y) < 100) {
-                let temp = speed1X;
-                speed1X = speed2X;
-                speed2X = temp;
-                temp = speed1Y;
-                speed1Y = speed2Y;
-                speed2Y = temp;
+                let distance = distanceFormula(circle1X, circle1Y, circle2X, circle2Y);
+                let collisionVectorX = (circle2X - circle1X) / distance;
+                let collisionVectorY = (circle2Y - circle1Y) / distance;
+                let collisionVelocity = (speed1X - speed2X) * collisionVectorX + (speed1Y - speed2Y) * collisionVectorY;
+
+                speed1X -= (collisionVelocity * collisionVectorX);
+                speed1Y -= (collisionVelocity * collisionVectorY);
+                speed2X += (collisionVelocity * collisionVectorX);
+                speed2Y += (collisionVelocity * collisionVectorY);
+
             }
 
             //Wall Collisions
